@@ -1,0 +1,558 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Sabzi Ghar",
+        "description": "Android app to deliver fresh vegetables/ fruits at your doorstep.",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "servers": [
+        {
+            "url": "/",
+            "description": "Local Dev, or from Heroku"
+        }
+        
+    ],
+    "tags": [
+        {
+            "name": "Categories",
+            "description": "APIs related to categories."
+        },
+        {
+            "name": "Products",
+            "description": "APIs related to Products."
+        },
+        {
+            "name":"User",
+            "description":"APIs related to User."
+        },
+        {
+            "name":"Order",
+            "description":"APIs related to Order."
+        }
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/categories": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get all categories in system",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Create a new category in system",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "requestBody": {
+                    "description": "Category Object",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties":{
+                                    "media":{
+                                        "type": "string",
+                                        "format": "base64"
+                                    }
+                                },
+                                "$ref": "#/definitions/Category"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    }
+                }
+            }
+        },
+        "/categories/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of the categories that we want to match",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get category with given ID",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Category with id",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. Category not found."
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete categories with given ID",
+                "tags": [
+                    "Categories"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Delete Category with id",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. Category not found."
+                    }
+                }
+            }
+        },
+        "/products": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get all products in the database.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Products"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Create a new products in system",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "requestBody": {
+                    "description": "Products Object",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties":{
+                                    "media":{
+                                        "type": "string",
+                                        "format": "base64"
+                                    }
+                                },
+                                "$ref": "#/definitions/Products"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    }
+                }
+            }
+        },
+        "/products/{categoryName}": {
+            "parameters": [
+                {
+                    "name": "categoryName",
+                    "in": "path",
+                    "required": true,
+                    "description": "category name of the products that we want to match",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get products with given category name",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "categoryName",
+                        "required": true,
+                        "description": "products with category name",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Products"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. products not found."
+                    }
+                }
+            }
+        },
+        "/products/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of the Products that we want to match",
+                    "type": "string"
+                }
+            ],
+            "delete": {
+                "summary": "Delete Products with given ID",
+                "tags": [
+                    "Products"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Delete Product with id",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Products"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. Products not found."
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update cat with given ID",
+                "tags": [
+                    "Products"
+                ],
+                "requestBody": {
+                    "description": "Products Object",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties":{
+                                    "media":{
+                                        "type": "string",
+                                        "format": "base64"
+                                    }
+                                },
+                                "$ref": "#/definitions/Products"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Products with new values of properties",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Products"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    },
+                    "404": {
+                        "description": "Failed. Cat not found."
+                    }
+                }
+            }
+        },
+
+        "/user":{
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get all User in system",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/user"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create a new User in system",
+                "requestBody": {
+                    "description": "User Object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/user"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    }
+                }
+            }
+
+        },
+        "/order":{
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Get all Order in system",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/order"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Create a new Order in system",
+                "requestBody": {
+                    "description": "Order Object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/order"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    }
+                }
+            }
+
+        },
+        "/order/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of the User that we want to match",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Get order with given User ID",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "order with User id",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/order"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. order not found."
+                    }
+                }
+            }
+        }
+
+    },
+    "definitions": {
+        "id": {
+            "properties": {
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "Category": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "image":{
+                    "type":"file"
+                }
+            }
+        },
+        "Products": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "string"
+                },
+                "category": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "file"
+                }
+            }
+        },
+
+        "user": {
+            "type":"object",
+            "properties": {
+                "mobile": {
+                    "type":"string"
+                },
+                "address":{
+                    "type":"string"
+                }
+            }
+        },
+        "order": {
+            "type":"object",
+            "properties": {
+                "quantity": {
+                    "type":"string"
+                },
+                "user":{
+                    "type":"string"
+                },
+                "product":{
+                    "type":"string"
+                },
+                "address":{
+                    "type":"string"
+                }
+            }
+        }
+
+
+    }
+}
