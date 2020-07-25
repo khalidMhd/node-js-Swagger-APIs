@@ -46,7 +46,7 @@ var upload = multer({
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Sabzi-Ghar' });
+  res.render('index', { title: 'Eccommerce' });
 });
 
 //=================== Category =========================
