@@ -2,8 +2,8 @@
     "openapi": "3.0.0",
     "info": {
         "version": "1.0.0",
-        "title": "Sabzi Ghar",
-        "description": "Android app to deliver fresh vegetables/ fruits at your doorstep.",
+        "title": "Ecommerce",
+        "description": "Ecommerce APIs.",
         "license": {
             "name": "MIT",
             "url": "https://opensource.org/licenses/MIT"
